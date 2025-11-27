@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EULO-KIMS — Register</title>
+  <style>
+    :root{--accent:#6f42c1;--bg:#0f1724;--card:#0b1220;--muted:#9aa6b2}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,#071028 0%, #0b1530 100%);color:#e6eef6;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+    .container{max-width:980px;width:100%;display:grid;grid-template-columns:1fr 420px;gap:36px;align-items:center}
+    .hero{padding:36px}
+    .logo{font-weight:700;font-size:28px;letter-spacing:1px;color:var(--accent);margin-bottom:18px}
+    h1{margin:0 0 12px;font-size:28px}
+    p.lead{margin:0;color:var(--muted)}
+    .card{background:rgba(255,255,255,0.03);border-radius:12px;padding:26px;box-shadow:0 6px 30px rgba(2,6,23,0.6)}
+    form{display:flex;flex-direction:column;gap:12px}
+    label{font-size:13px;color:var(--muted)}
+    input[type=text],input[type=tel],input[type=password]{width:100%;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit;font-size:15px}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .actions{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
+    .btn{background:var(--accent);border:none;color:white;padding:10px 16px;border-radius:10px;font-weight:600;cursor:pointer}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+    .small{font-size:13px;color:var(--muted)}
+    .footer-note{font-size:12px;color:var(--muted);margin-top:12px}
+    a{color:inherit;text-decoration:underline}
+    /* header tiny */
+    header.top{display:flex;justify-content:flex-end;gap:10px;margin-bottom:8px}
+    header.top a{padding:6px 10px;border-radius:8px}
+    /* responsive */
+    @media(max-width:880px){.container{grid-template-columns:1fr;}.hero{order:2}.card{order:1}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <header class="top">
+        <a class="small" href="#login">Login</a>
+      </header>
+      <div class="card">
+        <div class="logo">EULO-KIMS</div>
+        <h1>Create your account to get started</h1>
+        <p class="lead">Join the big community — create an account and start using our services.</p>
+        <div style="height:18px"></div>
+        <form id="regForm" class="form">
+          <div>
+            <label for="username">Username</label>
+            <input id="username" name="username" type="text" placeholder="Enter username" required />
+          </div>
+          <div>
+            <label for="upline">Upline</label>
+            <input id="upline" name="upline" type="text" placeholder="Upline username or ID" />
+          </div>
+          <div>
+            <label for="phone">Phone Number</label>
+            <input id="phone" name="phone" type="tel" placeholder="e.g. +2547XXXXXXXX" required />
+          </div>
+          <div class="row">
+            <div>
+              <label for="password">Password</label>
+              <input id="password" name="password" type="password" placeholder="Password" required />
+            </div>
+            <div>
+              <label for="confirm">Confirm Password</label>
+              <input id="confirm" name="confirm" type="password" placeholder="Confirm password" required />
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;margin-top:6px">
+            <input id="agree" type="checkbox" />
+            <label for="agree" class="small">I agree to the <a href="#terms">Terms</a> and <a href="#privacy">Privacy Policy</a></label>
+          </div>
+
+          <div class="actions">
+            <div class="small">Already have an account? <a href="#login">Login</a></div>
+            <button class="btn" type="submit">Register</button>
+          </div>
+          <div class="footer-note">By registering you agree to our terms. We will never share your phone number.</div>
+        </form>
+      </div>
+    </div>
+
+    <div class="card" style="padding:28px;display:flex;flex-direction:column;gap:12px;align-items:center">
+      <h2 style="margin:0">Welcome</h2>
+      <p class="small" style="text-align:center">Create an account to access your dashboard, refer friends, and withdraw earnings.</p>
+      <div style="width:100%;display:flex;gap:10px;justify-content:center;margin-top:12px">
+        <button class="btn ghost" onclick="showInfo()">How it works</button>
+        <button class="btn" onclick="document.getElementById('username').focus()">Register now</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('regForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      var u=document.getElementById('username').value.trim();
+      var p=document.getElementById('password').value;
+      var c=document.getElementById('confirm').value;
+      var phone=document.getElementById('phone').value.trim();
+      var agree=document.getElementById('agree').checked;
+      if(!u||!phone||!p||!c){alert('Please fill all required fields');return}
+      if(p!==c){alert('Passwords do not match');return}
+      if(!agree){alert('You must agree to the Terms and Privacy Policy');return}
+      // mimic network request
+      var payload={username:u,upline:document.getElementById('upline').value.trim(),phone:phone};
+      console.log('Register payload',payload);
+      // show success overlay
+      var prev= document.createElement('div');
+      prev.style.position='fixed';prev.style.inset=0;prev.style.display='flex';prev.style.alignItems='center';prev.style.justifyContent='center';prev.style.background='rgba(2,6,23,0.6)';
+      prev.innerHTML='<div style="background:#071029;padding:24px;border-radius:12px;max-width:520px;color:#dff;box-shadow:0 10px 50px rgba(0,0,0,0.6)"><h3 style="margin-top:0">Registered</h3><p>Your account request has been received. (This is a local replica — no account was created.)</p><div style="text-align:right;margin-top:14px"><button style="padding:8px 12px;border-radius:8px;border:none;background:var(--accent);color:#fff" onclick="this.closest('div').parentNode.remove()">Close</button></div></div>';
+      document.body.appendChild(prev);
+    });
+    function showInfo(){alert('This is a static replica of the registration page. For full functionality you need a server endpoint to accept registration data.');}
+  </script>
+</body>
+</html>
