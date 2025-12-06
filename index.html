@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>EULO-KIMS — Register</title>
+  <title>EULO-KIMS — Register / Login</title>
   <style>
     :root{--accent:#6f42c1;--bg:#0f1724;--card:#0b1220;--muted:#9aa6b2}
     *{box-sizing:border-box}
@@ -23,26 +23,29 @@
     .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06)}
     .small{font-size:13px;color:var(--muted)}
     .footer-note{font-size:12px;color:var(--muted);margin-top:12px}
-    a{color:inherit;text-decoration:underline}
-    /* header tiny */
+    a{color:inherit;text-decoration:underline;cursor:pointer}
     header.top{display:flex;justify-content:flex-end;gap:10px;margin-bottom:8px}
     header.top a{padding:6px 10px;border-radius:8px}
-    /* responsive */
     @media(max-width:880px){.container{grid-template-columns:1fr;}.hero{order:2}.card{order:1}}
+    #loginPage{display:none}
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="hero">
+
+    <!-- REGISTRATION PAGE -->
+    <div class="hero" id="registerPage">
       <header class="top">
-        <a class="small" href="#login">Login</a>
+        <a class="small" onclick="showLogin()">Login</a>
       </header>
+
       <div class="card">
         <div class="logo">EULO-KIMS</div>
-        <h1>Create your account to get started</h1>
-        <p class="lead">Join the big community — create an account and start using our services.</p>
+        <h1>Create your account</h1>
+        <p class="lead">Join the community and access your dashboard.</p>
         <div style="height:18px"></div>
-        <form id="regForm" class="form">
+
+        <form id="regForm">
           <div>
             <label for="username">Username</label>
             <input id="username" name="username" type="text" placeholder="Enter username" required />
@@ -55,6 +58,7 @@
             <label for="phone">Phone Number</label>
             <input id="phone" name="phone" type="tel" placeholder="e.g. +2547XXXXXXXX" required />
           </div>
+
           <div class="row">
             <div>
               <label for="password">Password</label>
@@ -68,29 +72,75 @@
 
           <div style="display:flex;align-items:center;gap:10px;margin-top:6px">
             <input id="agree" type="checkbox" />
-            <label for="agree" class="small">I agree to the <a href="#terms">Terms</a> and <a href="#privacy">Privacy Policy</a></label>
+            <label for="agree" class="small">I agree to the Terms & Privacy Policy</label>
           </div>
 
           <div class="actions">
-            <div class="small">Already have an account? <a href="#login">Login</a></div>
+            <div class="small">Already have an account? <a onclick="showLogin()">Login</a></div>
             <button class="btn" type="submit">Register</button>
           </div>
-          <div class="footer-note">By registering you agree to our terms. We will never share your phone number.</div>
+          <div class="footer-note">We never share your phone number.</div>
         </form>
       </div>
     </div>
 
-    <div class="card" style="padding:28px;display:flex;flex-direction:column;gap:12px;align-items:center">
-      <h2 style="margin:0">Welcome</h2>
-      <p class="small" style="text-align:center">Create an account to access your dashboard, refer friends, and withdraw earnings.</p>
-      <div style="width:100%;display:flex;gap:10px;justify-content:center;margin-top:12px">
-        <button class="btn ghost" onclick="showInfo()">How it works</button>
-        <button class="btn" onclick="document.getElementById('username').focus()">Register now</button>
+
+    <!-- LOGIN PAGE -->
+    <div class="hero" id="loginPage">
+      <header class="top">
+        <a class="small" onclick="showRegister()">Register</a>
+      </header>
+
+      <div class="card">
+        <div class="logo">EULO-KIMS</div>
+        <h1>Login</h1>
+        <p class="lead">Access your account securely.</p>
+        <div style="height:18px"></div>
+
+        <form id="loginForm">
+          <div>
+            <label for="loguser">Username or Phone</label>
+            <input id="loguser" type="text" placeholder="Enter username or phone" required />
+          </div>
+          <div>
+            <label for="logpass">Password</label>
+            <input id="logpass" type="password" placeholder="Password" required />
+          </div>
+
+          <div class="actions">
+            <div class="small">Don't have an account? <a onclick="showRegister()">Register</a></div>
+            <button class="btn" type="submit">Login</button>
+          </div>
+        </form>
       </div>
     </div>
+
+
+    <!-- RIGHT SIDE PANEL (unchanged) -->
+    <div class="card" style="padding:28px;display:flex;flex-direction:column;gap:12px;align-items:center">
+      <h2 style="margin:0">Welcome</h2>
+      <p class="small" style="text-align:center">Register or login to access your dashboard.</p>
+      <div style="width:100%;display:flex;gap:10px;justify-content:center;margin-top:12px">
+        <button class="btn ghost" onclick="alert('Static replica only — backend required.')">How it works</button>
+        <button class="btn" onclick="showRegister();document.getElementById('username').focus()">Get Started</button>
+      </div>
+    </div>
+
   </div>
 
+
+  <!-- SCRIPT SECTION -->
   <script>
+    function showLogin(){
+      document.getElementById('registerPage').style.display='none';
+      document.getElementById('loginPage').style.display='block';
+    }
+    function showRegister(){
+      document.getElementById('loginPage').style.display='none';
+      document.getElementById('registerPage').style.display='block';
+    }
+
+    // REGISTRATION
     document.getElementById('regForm').addEventListener('submit', function(e){
       e.preventDefault();
       var u=document.getElementById('username').value.trim();
@@ -98,19 +148,6 @@
       var c=document.getElementById('confirm').value;
       var phone=document.getElementById('phone').value.trim();
       var agree=document.getElementById('agree').checked;
-      if(!u||!phone||!p||!c){alert('Please fill all required fields');return}
-      if(p!==c){alert('Passwords do not match');return}
-      if(!agree){alert('You must agree to the Terms and Privacy Policy');return}
-      // mimic network request
-      var payload={username:u,upline:document.getElementById('upline').value.trim(),phone:phone};
-      console.log('Register payload',payload);
-      // show success overlay
-      var prev= document.createElement('div');
-      prev.style.position='fixed';prev.style.inset=0;prev.style.display='flex';prev.style.alignItems='center';prev.style.justifyContent='center';prev.style.background='rgba(2,6,23,0.6)';
-      prev.innerHTML='<div style="background:#071029;padding:24px;border-radius:12px;max-width:520px;color:#dff;box-shadow:0 10px 50px rgba(0,0,0,0.6)"><h3 style="margin-top:0">Registered</h3><p>Your account request has been received. (This is a local replica — no account was created.)</p><div style="text-align:right;margin-top:14px"><button style="padding:8px 12px;border-radius:8px;border:none;background:var(--accent);color:#fff" onclick="this.closest('div').parentNode.remove()">Close</button></div></div>';
-      document.body.appendChild(prev);
-    });
-    function showInfo(){alert('This is a static replica of the registration page. For full functionality you need a server endpoint to accept registration data.');}
-  </script>
-</body>
-</html>
+
+      if(!u||!phone||!p||!c){alert('Please fill all fields');return}
+      if(p!==
