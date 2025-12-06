@@ -3,151 +3,115 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>EULO-KIMS — Register / Login</title>
+  <title>EULO-KIMS — Auth</title>
   <style>
-    :root{--accent:#6f42c1;--bg:#0f1724;--card:#0b1220;--muted:#9aa6b2}
+    :root{
+      --accent:#6f42c1;
+      --bg:#0f1724;
+      --muted:#9aa6b2;
+      --card:rgba(255,255,255,0.03);
+    }
     *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,#071028 0%, #0b1530 100%);color:#e6eef6;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
-    .container{max-width:980px;width:100%;display:grid;grid-template-columns:1fr 420px;gap:36px;align-items:center}
-    .hero{padding:36px}
-    .logo{font-weight:700;font-size:28px;letter-spacing:1px;color:var(--accent);margin-bottom:18px}
-    h1{margin:0 0 12px;font-size:28px}
-    p.lead{margin:0;color:var(--muted)}
-    .card{background:rgba(255,255,255,0.03);border-radius:12px;padding:26px;box-shadow:0 6px 30px rgba(2,6,23,0.6)}
-    form{display:flex;flex-direction:column;gap:12px}
+    body{
+      margin:0;
+      font-family:Inter,Segoe UI,Roboto,Arial;
+      background:linear-gradient(180deg,#071028 0%, #0b1530 100%);
+      color:#e6eef6;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+    }
+    .container{
+      width:100%;
+      max-width:420px;
+      background:var(--card);
+      padding:32px;
+      border-radius:14px;
+      box-shadow:0 8px 40px rgba(0,0,0,0.45);
+      animation:fadeIn .5s ease-out;
+    }
+    @keyframes fadeIn{
+      from{opacity:0; transform:translateY(20px);}
+      to{opacity:1; transform:translateY(0);}
+    }
+    h1{margin-top:0;margin-bottom:8px;font-size:26px}
+    p.small{margin:0 0 18px;color:var(--muted);font-size:14px}
     label{font-size:13px;color:var(--muted)}
-    input[type=text],input[type=tel],input[type=password]{width:100%;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit;font-size:15px}
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    .actions{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
-    .btn{background:var(--accent);border:none;color:white;padding:10px 16px;border-radius:10px;font-weight:600;cursor:pointer}
-    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06)}
-    .small{font-size:13px;color:var(--muted)}
-    .footer-note{font-size:12px;color:var(--muted);margin-top:12px}
-    a{color:inherit;text-decoration:underline;cursor:pointer}
-    header.top{display:flex;justify-content:flex-end;gap:10px;margin-bottom:8px}
-    header.top a{padding:6px 10px;border-radius:8px}
-    @media(max-width:880px){.container{grid-template-columns:1fr;}.hero{order:2}.card{order:1}}
-    #loginPage{display:none}
+    input{
+      width:100%;
+      padding:12px;
+      background:transparent;
+      border-radius:8px;
+      border:1px solid rgba(255,255,255,0.08);
+      color:#fff;
+      margin-top:4px;
+    }
+    form{display:flex;flex-direction:column;gap:12px}
+    .btn{
+      background:var(--accent);
+      border:none;
+      padding:12px;
+      border-radius:10px;
+      color:#fff;
+      font-weight:600;
+      cursor:pointer;
+    }
+    .center{text-align:center}
+    a{color:var(--accent);cursor:pointer;text-decoration:none;font-size:14px}
+    .switch-text{font-size:14px;color:var(--muted)}
+    .hidden{display:none}
   </style>
 </head>
 <body>
-  <div class="container">
 
-    <!-- REGISTRATION PAGE -->
-    <div class="hero" id="registerPage">
-      <header class="top">
-        <a class="small" onclick="showLogin()">Login</a>
-      </header>
+  <!-- REGISTRATION PAGE -->
+  <div class="container" id="registerPage">
+    <h1>Create Account</h1>
+    <p class="small">Join EULO-KIMS and access your dashboard.</p>
 
-      <div class="card">
-        <div class="logo">EULO-KIMS</div>
-        <h1>Create your account</h1>
-        <p class="lead">Join the community and access your dashboard.</p>
-        <div style="height:18px"></div>
-
-        <form id="regForm">
-          <div>
-            <label for="username">Username</label>
-            <input id="username" name="username" type="text" placeholder="Enter username" required />
-          </div>
-          <div>
-            <label for="upline">Upline</label>
-            <input id="upline" name="upline" type="text" placeholder="Upline username or ID" />
-          </div>
-          <div>
-            <label for="phone">Phone Number</label>
-            <input id="phone" name="phone" type="tel" placeholder="e.g. +2547XXXXXXXX" required />
-          </div>
-
-          <div class="row">
-            <div>
-              <label for="password">Password</label>
-              <input id="password" name="password" type="password" placeholder="Password" required />
-            </div>
-            <div>
-              <label for="confirm">Confirm Password</label>
-              <input id="confirm" name="confirm" type="password" placeholder="Confirm password" required />
-            </div>
-          </div>
-
-          <div style="display:flex;align-items:center;gap:10px;margin-top:6px">
-            <input id="agree" type="checkbox" />
-            <label for="agree" class="small">I agree to the Terms & Privacy Policy</label>
-          </div>
-
-          <div class="actions">
-            <div class="small">Already have an account? <a onclick="showLogin()">Login</a></div>
-            <button class="btn" type="submit">Register</button>
-          </div>
-          <div class="footer-note">We never share your phone number.</div>
-        </form>
+    <form id="registerForm">
+      <div>
+        <label>Username</label>
+        <input type="text" id="reg_username" required placeholder="Your username">
       </div>
-    </div>
 
-
-    <!-- LOGIN PAGE -->
-    <div class="hero" id="loginPage">
-      <header class="top">
-        <a class="small" onclick="showRegister()">Register</a>
-      </header>
-
-      <div class="card">
-        <div class="logo">EULO-KIMS</div>
-        <h1>Login</h1>
-        <p class="lead">Access your account securely.</p>
-        <div style="height:18px"></div>
-
-        <form id="loginForm">
-          <div>
-            <label for="loguser">Username or Phone</label>
-            <input id="loguser" type="text" placeholder="Enter username or phone" required />
-          </div>
-          <div>
-            <label for="logpass">Password</label>
-            <input id="logpass" type="password" placeholder="Password" required />
-          </div>
-
-          <div class="actions">
-            <div class="small">Don't have an account? <a onclick="showRegister()">Register</a></div>
-            <button class="btn" type="submit">Login</button>
-          </div>
-        </form>
+      <div>
+        <label>Upline (optional)</label>
+        <input type="text" id="reg_upline" placeholder="Referred by">
       </div>
-    </div>
 
-
-    <!-- RIGHT SIDE PANEL (unchanged) -->
-    <div class="card" style="padding:28px;display:flex;flex-direction:column;gap:12px;align-items:center">
-      <h2 style="margin:0">Welcome</h2>
-      <p class="small" style="text-align:center">Register or login to access your dashboard.</p>
-      <div style="width:100%;display:flex;gap:10px;justify-content:center;margin-top:12px">
-        <button class="btn ghost" onclick="alert('Static replica only — backend required.')">How it works</button>
-        <button class="btn" onclick="showRegister();document.getElementById('username').focus()">Get Started</button>
+      <div>
+        <label>Phone Number</label>
+        <input type="tel" id="reg_phone" required placeholder="+2547XXXXXXXX">
       </div>
-    </div>
 
+      <div>
+        <label>Password</label>
+        <input type="password" id="reg_pass" required placeholder="Password">
+      </div>
+
+      <div>
+        <label>Confirm Password</label>
+        <input type="password" id="reg_pass2" required placeholder="Confirm password">
+      </div>
+
+      <button class="btn" type="submit">Register</button>
+    </form>
+
+    <p class="center switch-text">
+      Already have an account?
+      <a onclick="showLogin()">Login</a>
+    </p>
   </div>
 
 
-  <!-- SCRIPT SECTION -->
-  <script>
-    function showLogin(){
-      document.getElementById('registerPage').style.display='none';
-      document.getElementById('loginPage').style.display='block';
-    }
-    function showRegister(){
-      document.getElementById('loginPage').style.display='none';
-      document.getElementById('registerPage').style.display='block';
-    }
+  <!-- LOGIN PAGE -->
+  <div class="container hidden" id="loginPage">
+    <h1>Login</h1>
+    <p class="small">Welcome back — access your account.</p>
 
-    // REGISTRATION
-    document.getElementById('regForm').addEventListener('submit', function(e){
-      e.preventDefault();
-      var u=document.getElementById('username').value.trim();
-      var p=document.getElementById('password').value;
-      var c=document.getElementById('confirm').value;
-      var phone=document.getElementById('phone').value.trim();
-      var agree=document.getElementById('agree').checked;
-
-      if(!u||!phone||!p||!c){alert('Please fill all fields');return}
-      if(p!==
+    <form id="loginForm">
+      <div>
+        <label>Username or Phone</label>
