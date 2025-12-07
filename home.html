@@ -31,6 +31,14 @@
       grid-template-columns:1fr 360px;
       gap:28px;
     }
+    .box{
+      max-width:600px;
+      margin:auto;
+      background:rgba(255,255,255,0.03);
+      padding:25px;
+      border-radius:12px;
+      text-align:center;
+    }
     .card{
       background:var(--glass);
       border-radius:12px;
@@ -94,6 +102,10 @@
       </header>
 
       <div class="summary" aria-hidden="true">
+        <div class="box">
+    <h1 id="welcomeText">Welcome</h1>
+    <p>Your dashboard is now active.</p>
+  </div>
         <div class="pill">Referral Bonus: <strong>20%</strong></div>
         <div class="pill">Daily Income: <strong>10% / day</strong></div>
       </div>
@@ -219,10 +231,16 @@ Maximum investment: KES 100,000`;
   const url = "payment.html?amount=" + amount;
   window.location.href = url;
 }
+    // Load username from localStorage
+    let username = localStorage.getItem("eulo_username");
 
+    if(username){
+      document.getElementById("welcomeText").innerText = "Welcome, " + username;
+    } else {
+      document.getElementById("welcomeText").innerText = "Welcome, User";
+    }
 
-   
-  </script>
+</script>
   <footer1>
     © 2025 EULO-KIMS. All rights reserved.
   </footer1> 
