@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Payment — Trustees Ventures Limited</title>
+
+<style>
+  :root{
+    --accent:#6f42c1;
+    --muted:#8a93a0;
+    --bg:#071029;
+    --card:#0b1220;
+    --glass:rgba(255,255,255,0.04);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;
+    background:linear-gradient(180deg,var(--bg),#091a31);
+    color:#e6eef6;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:30px;
+    min-height:100vh;
+  }
+  .container{
+    width:100%;
+    max-width:420px;
+    background:var(--glass);
+    padding:26px;
+    border-radius:14px;
+    box-shadow:0 8px 40px rgba(0,0,0,0.5);
+  }
+  h2{
+    margin:0 0 12px;
+    color:var(--accent);
+    font-size:22px;
+    text-align:center;
+  }
+  .amount-box{
+    background:var(--card);
+    padding:18px;
+    border-radius:10px;
+    text-align:center;
+    font-size:28px;
+    margin:16px 0;
+    font-weight:700;
+    border:1px solid rgba(255,255,255,0.08);
+  }
+  label{
+    font-size:14px;
+    color:var(--muted);
+  }
+  input{
+    width:100%;
+    padding:12px;
+    margin-top:6px;
+    margin-bottom:16px;
+    border-radius:10px;
+    border:none;
+    background:#111a2e;
+    color:white;
+  }
+  .btn{
+    width:100%;
+    padding:14px;
+    background:var(--accent);
+    border:none;
+    border-radius:10px;
+    color:white;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+    margin-top:10px;
+  }
+  .btn:hover{
+    opacity:0.9;
+  }
+  .small{
+    font-size:13px;
+    color:var(--muted);
+    text-align:center;
+    margin-top:16px;
+  }
+  a{color:var(--accent);text-decoration:none}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>Confirm Payment</h2>
+
+  <div id="showAmount" class="amount-box">KES 0</div>
+
+  <label>Your Phone Number (M-PESA)</label>
+  <input type="tel" id="phone" placeholder="07XXXXXXXX" maxlength="10">
+
+  <button class="btn" onclick="makePayment()">Pay Now</button>
+
+  <div class="small">
+    After payment your investment will be activated automatically.<br>
+    <br>
+    <a href="index.html">← Back to Home</a>
+  </div>
+</div>
+
+<script>
+  // Read amount from URL
+  const params = new URLSearchParams(window.location.search);
+  const amount = params.get("amount") || 0;
+
+  // Display amount
+  document.getElementById("showAmount").innerText = "KES " + Number(amount).toLocaleString();
+
+  // Payment handler (you will replace this with real API)
+  function makePayment(){
+    const phone = document.getElementById("phone").value.trim();
+
+    if(!phone || phone.length < 10){
+      alert("Enter a valid M-PESA phone number.");
+      return;
+    }
+
+    alert(
+      "Processing payment...\n\n" +
+      "Amount: KES " + amount +
+      "\nPhone: " + phone +
+      "\n\n(Integrate your STK Push API here)"
+    );
+
+    // Example redirect after successful payment
+    // window.location.href = "success.html?amount=" + amount;
+  }
+</script>
+
+</body>
+</html>
