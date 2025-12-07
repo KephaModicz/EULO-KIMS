@@ -179,6 +179,40 @@
       document.getElementById("registerPage").classList.remove("hidden");
     }
   </script>
+  <script>
+  // Handle registration
+  document.getElementById("registerForm").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    let username = document.getElementById("reg_username").value.trim();
+    let pass = document.getElementById("reg_pass").value;
+    let pass2 = document.getElementById("reg_pass2").value;
+
+    if(pass !== pass2){
+      alert("Passwords do not match!");
+      return;
+    }
+
+    // Save username to localStorage for dashboard use
+    localStorage.setItem("eulo_username", username);
+
+    // Redirect to dashboard
+    window.location.href = "dashboard.html";
+  });
+
+
+  // Handle login
+  document.getElementById("loginForm").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    let username = document.getElementById("login_user").value.trim();
+
+    // Save username (for demo purpose)
+    localStorage.setItem("eulo_username", username);
+
+    window.location.href = "dashboard.html";
+  });
+</script>
 
 </body>
 </html>
