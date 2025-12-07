@@ -133,7 +133,6 @@
 
         <div class="panel-cta">
           <button class="btn" onclick="copyPlan()">Copy Plan Text</button>
-          <button class="btn ghost" onclick="downloadHTML()">Download HTML</button>
         </div>
 
         <div style="height:12px"></div>
@@ -178,17 +177,7 @@ Maximum investment: KES 100,000`;
       });
     }
 
-    function downloadHTML(){
-      const blob = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'trustees-ventures-plan.html';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-    }
+   
   </script>
   <footer1>
     © 2025 EULO-KIMS. All rights reserved.
