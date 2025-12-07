@@ -90,7 +90,55 @@
     }
   </style>
 </head>
-<h1>Login</h1>
+<body>
+
+  <!-- REGISTRATION PAGE -->
+  <div class="container" id="registerPage">
+    <h1>Create Account</h1>
+    <p class="small">Join EULO-KIMS and access your dashboard.</p>
+
+    <a href="home.html"><button class="btn" type="Dashboard">Home</button></a>
+
+    <form id="registerForm">
+      <div>
+        <label>Username</label>
+        <input type="text" id="reg_username" required placeholder="Your username">
+      </div>
+
+      <div>
+        <label>Upline (optional)</label>
+        <input type="text" id="reg_upline" placeholder="Referred by">
+      </div>
+
+      <div>
+        <label>Phone Number</label>
+        <input type="tel" id="reg_phone" required placeholder="+2547XXXXXXXX">
+      </div>
+
+      <div>
+        <label>Password</label>
+        <input type="password" id="reg_pass" required placeholder="Password">
+      </div>
+
+      <div>
+        <label>Confirm Password</label>
+        <input type="password" id="reg_pass2" required placeholder="Confirm password">
+      </div>
+
+      <button class="btn" type="submit">Register</button>
+    </form>
+
+    <p class="center switch-text">
+      Already have an account?
+      <a href="#" onclick="switchToLogin()">Login →</a>
+    </p>
+  </div>
+
+
+
+  <!-- LOGIN PAGE -->
+  <div class="container hidden" id="loginPage">
+    <h1>Login</h1>
     <p class="small">Welcome back — access your account.</p>
 
     <form id="loginForm">
@@ -111,6 +159,7 @@
       Don't have an account?
       <a href="#" onclick="switchToRegister()">Create Account →</a>
     </p>
+  </div>
 
 
 
@@ -133,4 +182,6 @@
       document.getElementById("registerPage").classList.remove("hidden");
     }
   </script>
+
+</body>
 </html>
